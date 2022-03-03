@@ -6,20 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./style.css">
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link rel="stylesheet" href="./script.js">
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-        crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    
     <link rel="icon" href="./img/logopreta.png" type="img/png">
+
     <title>Temporizador Pomodoro</title>
 </head>
 
@@ -29,12 +21,12 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-warning">
         <a class="navbar-brand font-weight-bold text-black-50" href="index.html">Temporizador Pomodoro</a>
 
-        <!-- <div class="ml-auto">
-            <a href="#"><i class="fa fa-play-circle-o text-black-50" style="font-size: 25pt;"
+        <div class="ml-auto">
+            <a href="#"><i id="play" class="fa fa-play-circle-o text-black-50" style="font-size: 25pt;"
                     aria-hidden="true"></i></a>
-            <a href="#"><i class="fa fa-pause-circle-o text-black-50" style="font-size: 25pt;"
+            <a href="#"><i id="pause" class="fa fa-pause-circle-o text-black-50" style="font-size: 25pt;"
                     aria-hidden="true"></i></a>
-        </div> -->
+        </div>
     </nav>
 
     <!-- Caixas do Temporizador -->
@@ -46,13 +38,16 @@
                 <div id="config">
 
                     <div class="col">
+
                         <!-- Inputs -->
+
                         <div class="row d-flex justify-content-center">
 
                             <div class="col-md-3 font-weight-bold text-white-50">
                                 <div class="form-group">
-                                    <label class="d-flex justify-content-center" for="trabalhando">Trabalhando</label>
-                                    <input type="number" class="form-control rounded-circle form-control-lg bg-dark border-0 shadow text-white-50" id="trabalhando">
+                                    <label class="d-flex justify-content-center" for="foco">Foco total! Desligue as notificações e bora lá!</label>
+                                    <input type="number" class="form-control rounded-circle form-control-lg bg-dark border-0 shadow text-white-50" id="foco">
+                                    <small class="text-danger" id='erro_foco'></small>
                                 </div>
                             </div>
 
@@ -60,6 +55,7 @@
                                 <div class="form-group">
                                     <label class="d-flex justify-content-center" for="pausa">Hora da Pausa</label>
                                     <input type="number" class="form-control rounded-circle form-control-lg bg-dark border-0 shadow text-white-50" id="pausa">
+                                    <small class="text-danger" id='erro_pausa'></small>
                                 </div>
                             </div>
 
@@ -67,37 +63,98 @@
                                 <div class="form-group">
                                     <label class="d-flex justify-content-center" for="repeticoes">Repetições</label>
                                     <input type="number" class="form-control rounded-circle form-control-lg bg-dark border-0 shadow text-white-50" id="repeticoes">
+                                    <small class="text-danger" id='erro_repeticoes'></small>
                                 </div>
                             </div>
                         </div>   
                         <!-- /Inputs --> 
 
-                        <!-- Inicializador -->
+                        <!-- Inicializador | Vamos lá? -->
+
                             <div class="row mt-5 mb-5 d-flex justify-content-center">
                                 <div class="col-md-9">
-                                    <button class="btn btn-warning shadow btn-lg btn-block font-weight-bold text-black-50">Vamos lá?</button>
+                                    <button onclick="Iniciar()" class="btn btn-warning shadow btn-lg btn-block font-weight-bold text-black-50">Vamos lá?</button>
                                 </div>
                             </div>
-                        <!-- /Inicializador -->
+
+                        <!-- /Inicializador | Vamos lá? -->
                     </div>
                 </div>
             </div>
         </div> 
         <!-- /Configuração -->   
 
-        <!-- Contador dos Tempos-->
+        <!-- Contador dos Tempos | Timer-->
+
         <div id="timer" class="mt-0 d-flex justify-content-center"> 
+
             <div class="row mb-3">
-                <!-- <div class="col">
-                    <h3></h3>
-                </div> -->
+                <div class="col">
+                    <h3 id='title' class="text-center text-secundary"></h3>
+                </div>
+            </div>
+        <!-- /Contador dos Tempos | Timer-->
+
+            <!-- Minutagem ativa, depois que clicar em Iniciar -->
+
+            <div class="row shadow time">
+                <div class="col-5 p-0">
+                    <h2 id="minutes_ok"></h2>
+                </div>
+
+                <div class="col-1 p-0 d-flex justify-content-center">
+                    <h2>:</h2>
+                </div>
+
+                <div class="col-5 pl-0">
+                    <h2 id="seconds_ok"></h2>
+                </div>
+
+            </div>
+            <!-- /Minutagem ativa, depois que clicar em Iniciar -->
+
+
+            <!-- Texto que ficará abaixo do timer que estará rodando -->
+
+            <div class="row mt-5">
+                <div class="col">
+                    <h3 id="repeticoes" class="text-center text-secundary"></h3>
+                </div>
+            </div>
+
+            <!-- /Texto que ficará abaixo do timer que estará rodando -->
+
+        </div>
+
+        <!-- Finalizou -->
+
+        <div id="fim" style="display: none;">
+            <h1 class="text-info text-center"></h1>
+            <div class="row mt-5 mb-5 d-flex justify-content-center">
+                <div class="col-md-9 d-flex justify-content-center">
+                    <a href="./index.html" class="btn btn-info shadow btn-lg text-body">Uau! Sabia que você conseguiria, parabéns!</a>
+                </div>
             </div>
         </div>
+
+        <!-- /Finalizou -->
+
         <!-- /Contador dos Tempos-->
     </section>
 
     <main></main>
     <footer></footer>
+
+    <script src="./script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+    integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+    crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+    integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>

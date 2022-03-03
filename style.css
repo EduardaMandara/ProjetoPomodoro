@@ -19,3 +19,20 @@ input[type="number"] {
 	margin: 0;
 }
 
+/* Timer */
+
+.timer {
+	color: white;
+	text-align: center;
+	width: 20rem;
+	height: 20rem;
+	border-radius: 10rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+h2 {
+	font-size: 90pt;
+	
+}
