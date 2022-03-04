@@ -3,12 +3,12 @@ let pausa = document.getElementById('pausa')
 let repeticoes = document.getElementById('repeticoes')
 let segundos
 
-var bell = new Audio("./audio_bell.mp3")
-var volta = new Audio("./audio_volta.mp3")
-var final = new Audio("./audio_final.mp3")
+// var bell = new Audio("./audio_bell.mp3")
+// var volta = new Audio("./audio_volta.mp3")
+// var final = new Audio("./audio_final.mp3")
 
-var play = document.getElementById('play')
-var pause = document.getElementById('pause')
+// var play = document.getElementById('play')
+// var pause = document.getElementById('pause')
 
 // Verificar se os campos foram preenchidos corretamente
 
