@@ -32,7 +32,9 @@ function iniciar() {
         localStorage.setItem('foco', String(foco.value))
         localStorage.setItem('pausa', String(pausa.value))
         localStorage.setItem('repeticoes', String(repeticoes.value))
-  
+        
+        document.getElementById('config').style.setProperty('display', 'none', 'important')
+        document.getElementById('timer').style.setProperty('display', 'block', 'important')
      }
   
   }

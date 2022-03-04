@@ -20,14 +20,13 @@ input[type="number"] {
 }
 
 /* Timer */
-
 .timer {
 	color: white;
 	text-align: center;
 	width: 20rem;
 	height: 20rem;
 	border-radius: 10rem;
-	display: flex;
+	display: none !important;
 	justify-content: center;
 	align-items: center;
 }
